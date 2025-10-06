@@ -9,7 +9,7 @@ export default class extends BaseSchema {
 
       table.float('value').notNullable()
       table.timestamp('timestamp').notNullable()
-      
+      table.integer('sensor_id').unsigned().references('id').inTable('sensors').onDelete('CASCADE')
 
       table.timestamp('created_at')
       table.timestamp('updated_at')
