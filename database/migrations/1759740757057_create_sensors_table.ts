@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       
       table.string('name').notNullable()
       table.string('type').notNullable()
-      table.float('treshold_value').notNullable()
+      table.float('threshold_value').notNullable()
       table.boolean('is_active').defaultTo(true)
 
       table.timestamp('created_at')

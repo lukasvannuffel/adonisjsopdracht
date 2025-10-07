@@ -1,0 +1,62 @@
+@layout('layouts/main')
+
+@section('title')
+  Sensor Overzicht
+@end
+
+@section('content')
+  <h1>Sensor Overzicht</h1>
+  <p>Alle sensoren met hun laatste waarde</p>
+
+  @if(sensors.length === 0)
+    <p>Geen sensoren gevonden. <a href="{{ route('sensors.create') }}">Voeg een sensor toe</a></p>
+  @else
+    <table>
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>Type</th>
+          <th>Drempelwaarde</th>
+          <th>Status</th>
+          <th>Laatste Waarde</th>
+          <th>Laatste Meting</th>
+          <th>Acties</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(sensor in sensors)
+          <tr>
+            <td>{{ sensor.name }}</td>
+            <td>{{ sensor.type }}</td>
+            <td>{{ sensor.thresholdValue }}</td>
+            <td>
+              @if(sensor.isActive)
+                <span class="status-active">Actief</span>
+              @else
+                <span class="status-inactive">Inactief</span>
+              @end
+            </td>
+            <td>
+              @if(sensor.readings.length > 0)
+                {{ sensor.readings[0].value }}
+              @else
+                Geen metingen
+              @end
+            </td>
+            <td>
+              @if(sensor.readings.length > 0)
+                {{ sensor.readings[0].timestamp.toFormat('dd/MM/yyyy HH:mm:ss') }}
+              @else
+                -
+              @end
+            </td>
+            <td>
+              <a href="{{ route('sensors.show', { id: sensor.id }) }}" class="btn">Details</a>
+              <a href="{{ route('sensors.edit', { id: sensor.id }) }}" class="btn btn-secondary">Bewerken</a>
+            </td>
+          </tr>
+        @end
+      </tbody>
+    </table>
+  @end
+@end
